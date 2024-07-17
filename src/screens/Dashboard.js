@@ -1,6 +1,6 @@
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import { COLORS } from '../themes/colors';
 import { FollowingDays } from '../components/FollowingDays';
 
@@ -24,21 +24,25 @@ const FOLLOWING_DAYS = [
 
 export const Dashboard = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.cityName}>Warszawa</Text>
-      <Text style={styles.temperature}>22°</Text>
-      <View style={styles.weatherContainer}>
-        <Feather name="sun" size={100} color={COLORS.sun} />
-        <Text style={styles.weather}>Słonecznie</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.cityName}>Warszawa</Text>
+        <Text style={styles.temperature}>22°</Text>
+        <View style={styles.weatherContainer}>
+          <Feather name="sun" size={100} color={COLORS.sun} />
+          <Text style={styles.weather}>Słonecznie</Text>
+        </View>
+        <View style={styles.followingDaysContainer}>
+          {FOLLOWING_DAYS.map((item, index) => {
+            return (
+              <>
+                <FollowingDays key={item.name} day={item} isLast={index === FOLLOWING_DAYS.length -1}/>
+              </>
+            );
+          })}
+        </View>
       </View>
-      {FOLLOWING_DAYS.map((item) => {
-        return (
-          <>
-            <FollowingDays day={item} />
-          </>
-        );
-      })}
-    </View>
+    </ScrollView>
   )
 }
 
@@ -65,5 +69,13 @@ const styles = StyleSheet.create({
   weather: {
     fontSize: 26,
     color: COLORS.text,
-  }
+  },
+  followingDaysContainer: {
+    margin: 20,
+    marginTop: 40,
+    backgroundColor: COLORS.lightBlue,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
 })
