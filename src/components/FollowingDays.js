@@ -1,15 +1,31 @@
-import { Text, View, StyleSheet } from 'react-native'
-import { Feather } from '@expo/vector-icons';
+import { Text, View, StyleSheet, Image } from 'react-native'
 import { COLORS } from '../themes/colors';
+import dayjs from 'dayjs';
+import 'dayjs/locale/pl';
+import isToday from 'dayjs/plugin/isToday';
 
-
+dayjs.extend(isToday);
+dayjs.locale("pl");
 
 export const FollowingDays = ({ day, isLast }) => {
+    const date = dayjs(day.date).isToday()
+        ? "dzisiaj"
+        : dayjs(day.date).format("dddd");
+
     return (
         <View style={[styles.container, !isLast && styles.separator]}>
-            <Text style={styles.content}>{day.name}</Text>
-            <Text style={[styles.content, styles.value]}>{day.value}</Text>
-            <Feather style={[styles.content, styles.type]} name="sun" size={40} color={COLORS.sun} />
+            <Text style={styles.content}>{date}</Text>
+            <Text style={[styles.content, styles.value]}>
+                {Math.floor(day.day.mintemp_c)}° - {Math.ceil(day.day.maxtemp_c)}°
+            </Text>
+            <Image
+                source={{
+                    uri: `https:${day.day.condition.icon}`,
+                }}
+                resizeMode="contain"
+                width={40}
+                height={40}
+            />
         </View>
     )
 }
@@ -20,6 +36,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: "center",
         justifyContent: "space-between",
+        minHeight: 40,
     },
     separator: {
         borderBottomWidth: 1,

@@ -1,46 +1,58 @@
-import React from 'react'
-import { Feather } from '@expo/vector-icons';
-import { Text, View, StyleSheet, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet, ScrollView, ActivityIndicator, Image } from 'react-native'
 import { COLORS } from '../themes/colors';
 import { FollowingDays } from '../components/FollowingDays';
-
-const FOLLOWING_DAYS = [
-  {
-    name: 'Dzisiaj',
-    value: 22,
-    type: 'sun',
-  },
-  {
-    name: 'Wtorek',
-    value: 22,
-    type: 'sun',
-  },
-  {
-    name: 'Środa',
-    value: 22,
-    type: 'sun',
-  }
-]
+import { Footer } from '../components/Footer';
+import { fetchCityData, fetchFollowingDays } from '../services/apis'; 
 
 export const Dashboard = () => {
+  const [current, setCurrent] = useState(null);
+  const [followingDays, setFollowingDays] = useState(null); 
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const currentData = await fetchCityData();
+        setCurrent(currentData);
+        
+        const followingDaysData = await fetchFollowingDays();
+        setFollowingDays(followingDaysData);
+      } catch (error) {
+        console.error("Błąd podczas pobierania danych:", error);
+      }
+    };
+    init();
+  }, []);
+
+  if (!current || !followingDays) {
+    return <ActivityIndicator color={COLORS.sun} size="large" style={{ height: "100%" }} />
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.cityName}>Warszawa</Text>
-        <Text style={styles.temperature}>22°</Text>
+        <Text style={styles.cityName}>{current.location.name}</Text>
+        <Text style={styles.temperature}>{current.current.temp_c}°</Text>
         <View style={styles.weatherContainer}>
-          <Feather name="sun" size={100} color={COLORS.sun} />
-          <Text style={styles.weather}>Słonecznie</Text>
+          <Image
+            source={{
+              uri: `https:${current.current.condition.icon}`,
+            }}
+            resizeMode="contain"
+            width={150}
+            height={150}
+          />
+          <Text style={styles.weather}>{current.current.condition.text}</Text>
         </View>
         <View style={styles.followingDaysContainer}>
-          {FOLLOWING_DAYS.map((item, index) => {
-            return (
-              <>
-                <FollowingDays key={item.name} day={item} isLast={index === FOLLOWING_DAYS.length -1}/>
-              </>
-            );
-          })}
+          {followingDays.forecast.forecastday.map((day, index, allDays) => (
+            <FollowingDays
+              key={day.date}
+              day={day}
+              isLast={index === allDays.length - 1} />
+          ))}
         </View>
+        <Footer/>
       </View>
     </ScrollView>
   )
@@ -53,7 +65,6 @@ const styles = StyleSheet.create({
   weatherContainer: {
     width: '100%',
     alignItems: "center",
-    marginTop: 10,
   },
   cityName: {
     fontSize: 30,

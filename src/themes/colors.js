@@ -3,4 +3,5 @@ export const COLORS = {
     sun: '#fcd303',
     text: '#fff',
     lightBlue: '#34bffa',
+    link: "#4550E6"
 }
