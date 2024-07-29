@@ -4,10 +4,11 @@ import { COLORS } from '../themes/colors';
 import { FollowingDays } from '../components/FollowingDays';
 import { Footer } from '../components/Footer';
 import { fetchCityData, fetchFollowingDays } from '../services/apis'; 
+import { CityData, FollowingDay } from "../types/api";
 
 export const Dashboard = () => {
-  const [current, setCurrent] = useState(null);
-  const [followingDays, setFollowingDays] = useState(null); 
+  const [current, setCurrent] = useState<null | CityData>(null);
+  const [followingDays, setFollowingDays] = useState<null | FollowingDay>(null); 
 
   useEffect(() => {
     const init = async () => {
