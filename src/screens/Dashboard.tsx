@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, ScrollView, ActivityIndicator, Image } from 'react-native'
+import { Text, View, StyleSheet, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { COLORS } from '../themes/colors';
 import { FollowingDays } from '../components/FollowingDays';
 import { Footer } from '../components/Footer';
