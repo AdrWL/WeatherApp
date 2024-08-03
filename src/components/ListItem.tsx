@@ -12,7 +12,7 @@ interface ListItemProps {
 
 export const ListItem = ({ isLast, title, value, condition }: ListItemProps) => {
   return (
-    <View style={(styles.container, isLast && styles.separator)}>
+    <View style={[styles.container, !isLast && styles.separator]}>
       <Text style={styles.content}>{title}</Text>
       <Text style={[styles.content, styles.value]}>
         {value}

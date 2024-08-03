@@ -19,8 +19,8 @@ export default function App() {
       <SafeAreaProvider>
         <StatusBar style="light"/>
         <SafeAreaView style={styles.container}>
-            {/* <Dashboard/> */}
-          <DayDetails/>
+            <Dashboard/>
+          {/* <DayDetails/> */}
         </SafeAreaView>
       </SafeAreaProvider>
   );
