@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ActivityIndicator, Image, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  FlatList,
+} from "react-native";
 import { COLORS } from "../themes/colors";
 import { CityData, FollowingDay } from "../types/api";
 import { fetchCityData, fetchFollowingDays } from "../services/apis";
@@ -39,29 +46,72 @@ export const DayDetails = () => {
   const locationName = "Warszawa";
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={[styles.location, styles.text]}>{locationName}</Text>
-      <Text style={[styles.date, styles.text]}>{dayjs(day.date).format("dddd, D MMMM YYYY")}</Text>
-      <Image
-        source={{ uri: `https:${day.day.condition.icon}` }}
-        width={100}
-        height={100}
-      />
-      <Text style={[styles.temperature, styles.text]}>
-        {`${Math.floor(day.day.mintemp_c)} - ${Math.ceil(day.day.maxtemp_c)}`}
-      </Text>
-      <View style={styles.listContainer}>
-        {day.hour.map((hour, index, allHours)=> (
-        <ListItem
-            key={hour.time}
-            isLast={index === allHours.length - 1}
-            title={hour.time}
-            value={hour.temp_c}
-            condition={hour.condition}
-        />
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList
+      data={day.hour}
+      contentContainerStyle={{ paddingBottom: 20}}
+      ListHeaderComponent={
+        <View style={{ alignItems: "center" }}>
+          <Text style={[styles.location, styles.text]}>{locationName}</Text>
+          <Text style={[styles.date, styles.text]}>
+            {dayjs(day.date).format("dddd, D MMMM YYYY")}
+          </Text>
+          <Image
+            source={{ uri: `https:${day.day.condition.icon}` }}
+            width={100}
+            height={100}
+          />
+          <Text style={[styles.temperature, styles.text]}>
+            {`${Math.floor(day.day.mintemp_c)} - ${Math.ceil(
+              day.day.maxtemp_c
+            )}`}
+          </Text>
+        </View>
+      }
+      // contentContainerStyle={styles.container}
+      renderItem={({ item: hour, index }) => {
+        const isLast = index === day.hour.length - 1;
+        return (
+          <View
+            style={[
+              styles.item,
+              index === 0 && styles.firstItem,
+              isLast && styles.lastItem,
+            ]}
+          >
+            <ListItem
+              key={hour.time}
+              isLast={isLast}
+              title={hour.time}
+              value={hour.temp_c}
+              condition={hour.condition}
+            />
+          </View>
+        );
+      }}
+    />
+    // <ScrollView contentContainerStyle={styles.container}>
+    //   <Text style={[styles.location, styles.text]}>{locationName}</Text>
+    //   <Text style={[styles.date, styles.text]}>{dayjs(day.date).format("dddd, D MMMM YYYY")}</Text>
+    //   <Image
+    //     source={{ uri: `https:${day.day.condition.icon}` }}
+    //     width={100}
+    //     height={100}
+    //   />
+    //   <Text style={[styles.temperature, styles.text]}>
+    //     {`${Math.floor(day.day.mintemp_c)} - ${Math.ceil(day.day.maxtemp_c)}`}
+    //   </Text>
+    //   <View style={styles.listContainer}>
+    //     {day.hour.map((hour, index, allHours)=> (
+    //     <ListItem
+    //         key={hour.time}
+    //         isLast={index === allHours.length - 1}
+    //         title={hour.time}
+    //         value={hour.temp_c}
+    //         condition={hour.condition}
+    //     />
+    //     ))}
+    //   </View>
+    // </ScrollView>
   );
 };
 
@@ -80,18 +130,34 @@ const styles = StyleSheet.create({
   },
   temperature: {
     fontSize: 40,
-    fontWeight: "600"
+    fontWeight: "600",
   },
   text: {
     color: COLORS.text,
     marginTop: 20,
   },
-  listContainer: {
+  // listContainer: {
+  //   backgroundColor: COLORS.lightBlue,
+  //   marginTop: 40,
+  //   marginHorizontal: 20,
+  //   borderRadius: 10,
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 20,
+  // },
+  item: {
     backgroundColor: COLORS.lightBlue,
-    marginTop: 40,
     marginHorizontal: 20,
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  firstItem: {
+    marginTop: 40,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    paddingTop: 10,
+  },
+  lastItem: {
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    paddingBottom: 10,
   },
 });
