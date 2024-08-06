@@ -6,7 +6,7 @@ import { Footer } from '../components/Footer';
 import { fetchCityData, fetchFollowingDays } from '../services/apis'; 
 import { CityData, FollowingDay } from "../types/api";
 
-export const Dashboard = () => {
+export const LocationDetails = () => {
   const [current, setCurrent] = useState<null | CityData>(null);
   const [followingDays, setFollowingDays] = useState<null | FollowingDay>(null); 
 
@@ -50,7 +50,9 @@ export const Dashboard = () => {
             <FollowingDays
               key={day.date}
               day={day}
-              isLast={index === allDays.length - 1} />
+              isLast={index === allDays.length - 1} 
+              locationName={current.location.name}
+              />
           ))}
         </View>
         <Footer/>

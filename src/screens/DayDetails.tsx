@@ -12,39 +12,11 @@ import { CityData, FollowingDay } from "../types/api";
 import { fetchCityData, fetchFollowingDays } from "../services/apis";
 import dayjs from "dayjs";
 import { ListItem } from "../components/ListItem";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { RootStackParamList } from "../navigation/Root";
 
 export const DayDetails = () => {
-  const [current, setCurrent] = useState<null | CityData>(null);
-  const [followingDays, setFollowingDays] = useState<null | FollowingDay>(null);
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const currentData = await fetchCityData();
-        setCurrent(currentData);
-
-        const followingDaysData = await fetchFollowingDays();
-        setFollowingDays(followingDaysData);
-      } catch (error) {
-        console.error("Błąd podczas pobierania danych:", error);
-      }
-    };
-    init();
-  }, []);
-
-  if (!current || !followingDays) {
-    return (
-      <ActivityIndicator
-        color={COLORS.sun}
-        size="large"
-        style={{ height: "100%" }}
-      />
-    );
-  }
-
-  const day = followingDays.forecast.forecastday[0];
-  const locationName = "Warszawa";
-
+  const {params: {day, locationName}} = useRoute<RouteProp<RootStackParamList, 'DayDetails'>>()
   return (
     <FlatList
       data={day.hour}
@@ -80,9 +52,10 @@ export const DayDetails = () => {
             <ListItem
               key={hour.time}
               isLast={isLast}
-              title={hour.time}
+              title={dayjs(hour.time).format("HH:mm")}
               value={hour.temp_c}
               condition={hour.condition}
+              // onPress={() => {}}
             />
           </View>
         );

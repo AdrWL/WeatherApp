@@ -1,36 +1,39 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Dashboard } from "./src/screens/Dashboard";
+import { LocationDetails } from "./src/screens/LocationDetails";
 import { COLORS } from "./src/themes/colors";
 import { DayDetails } from "./src/screens/DayDetails";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DefaultTheme,
+  Theme,
+} from "@react-navigation/native";
 
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import isToday from "dayjs/plugin/isToday";
+import { Root } from "./src/navigation/Root";
 
 dayjs.extend(isToday);
 dayjs.locale("pl");
 
+const MyTheme: Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: COLORS.background,
+    card: COLORS.background,
+  },
+};
+
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <SafeAreaProvider>
         <StatusBar style="light" />
-        <SafeAreaView style={styles.container}>
-          {/* <Dashboard/> */}
-          <DayDetails />
-        </SafeAreaView>
+          <Root />
       </SafeAreaProvider>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
-});
