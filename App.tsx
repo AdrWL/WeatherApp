@@ -1,9 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { LocationDetails } from "./src/screens/LocationDetails";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { COLORS } from "./src/themes/colors";
-import { DayDetails } from "./src/screens/DayDetails";
 import {
   NavigationContainer,
   DefaultTheme,

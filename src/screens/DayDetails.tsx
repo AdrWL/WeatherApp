@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Text,
   View,
   StyleSheet,
-  ActivityIndicator,
   Image,
   FlatList,
 } from "react-native";
 import { COLORS } from "../themes/colors";
-import { CityData, FollowingDay } from "../types/api";
-import { fetchCityData, fetchFollowingDays } from "../services/apis";
 import dayjs from "dayjs";
 import { ListItem } from "../components/ListItem";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -55,7 +52,7 @@ export const DayDetails = () => {
               title={dayjs(hour.time).format("HH:mm")}
               value={hour.temp_c}
               condition={hour.condition}
-              // onPress={() => {}}
+              onPress={() => {}}
             />
           </View>
         );
