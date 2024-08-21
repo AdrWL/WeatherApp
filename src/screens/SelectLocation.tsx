@@ -1,9 +1,7 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
-  TextInput,
   FlatList,
 } from "react-native";
 import React, { useState } from "react";
@@ -21,8 +19,6 @@ interface ListItem {
 export const SelectLocation = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const [value, setValue] = useState("");
   const [list, setList] = useState<ListItem[]>([]);
 
   return (
