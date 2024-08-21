@@ -4,70 +4,64 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Root";
 import { COLORS } from "../themes/colors";
+import { SearchInput } from "../components/SearchInput";
+
+interface ListItem {
+  title: string;
+  value: string;
+}
 
 export const SelectLocation = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [value, setValue] = useState("");
-  const [list, setList] = useState<string[]>([]);
+  const [list, setList] = useState<ListItem[]>([]);
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Wpisz lokalizację"
-        placeholderTextColor={COLORS.text}
-        selectionColor={COLORS.text}
-        style={styles.input}
-        onChangeText={setValue}
-        value={value}
+    <FlatList
+       ListHeaderComponent={
+          <SearchInput onSearch={(value) => 
+             setList([...list, {title: value, value: value}])
+            }
+            />
+      }
+      ListHeaderComponentStyle={styles.header}
+      contentContainerStyle={styles.container}
+      data={list}
+      renderItem={({ item })=> (
+          <View style={styles.item}>
+            <Text style={styles.itemText}>{item.title}</Text>
+         </View>
+      )}
+      keyExtractor={(item) => item.value}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          setList([...list, value]);
-        }}
-      >
-        <Text style={styles.buttonText}>Dodaj</Text>
-      </TouchableOpacity>
-      {list.map((item) => (
-        <Text>{item}</Text>
-      ))}
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    margin: 20,
   },
-  input: {
+  header: {
+    marginBottom: 40,
+  },
+  item: {
     width: "100%",
-    borderWidth: 1,
-    borderColor: COLORS.link,
-    padding: 15,
-    paddingHorizontal: 20,
-    fontSize: 16,
-    color: COLORS.text,
+    backgroundColor: COLORS.lightBlue,
+    marginBottom: 10,
+    padding: 20,
     borderRadius: 10,
   },
-  button: {
-    width: "100%",
-    backgroundColor: COLORS.link,
-    marginTop: 20,
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
+  itemText: {
     color: COLORS.text,
     fontSize: 16,
-  },
+  }
 });
