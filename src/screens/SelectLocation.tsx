@@ -3,6 +3,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -17,7 +18,7 @@ interface ListItem {
 }
 
 export const SelectLocation = () => {
-  const navigation =
+  const {navigate} =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [list, setList] = useState<ListItem[]>([]);
 
@@ -33,9 +34,9 @@ export const SelectLocation = () => {
       contentContainerStyle={styles.container}
       data={list}
       renderItem={({ item })=> (
-          <View style={styles.item}>
+          <TouchableOpacity style={styles.item} onPress={() => navigate("LocationDetails")}>
             <Text style={styles.itemText}>{item.title}</Text>
-         </View>
+         </TouchableOpacity>
       )}
       keyExtractor={(item) => item.value}
       />
