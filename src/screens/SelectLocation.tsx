@@ -5,41 +5,43 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Root";
 import { COLORS } from "../themes/colors";
 import { SearchInput } from "../components/SearchInput";
-
-interface ListItem {
-  title: string;
-  value: string;
-}
+import { useLocationList } from "../hooks/useLocationList";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export const SelectLocation = () => {
-  const {navigate} =
+  const { navigate } =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const [list, setList] = useState<ListItem[]>([]);
+  const { list, addToList, removeFromList } = useLocationList();
 
   return (
     <FlatList
-       ListHeaderComponent={
-          <SearchInput onSearch={(value) => 
-             setList([...list, {title: value, value: value}])
-            }
-            />
+      ListHeaderComponent={
+        <SearchInput
+          onSearch={(value) => addToList({ title: value, value: value })}
+        />
       }
       ListHeaderComponentStyle={styles.header}
       contentContainerStyle={styles.container}
       data={list}
-      renderItem={({ item })=> (
-          <TouchableOpacity style={styles.item} onPress={() => navigate("LocationDetails", {location: item.value})}>
-            <Text style={styles.itemText}>{item.title}</Text>
-         </TouchableOpacity>
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => navigate("LocationDetails", { location: item.value })}
+        >
+          <Text style={styles.itemText}>{item.title}</Text>
+          <TouchableOpacity onPress={() => removeFromList(item)}>
+            <FontAwesome name="trash-o" size={24} color={COLORS.error} />
+          </TouchableOpacity>
+        </TouchableOpacity>
       )}
-      keyExtractor={(item) => item.value}
-      />
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 
@@ -56,9 +58,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 20,
     borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   itemText: {
     color: COLORS.text,
     fontSize: 16,
-  }
+  },
 });
