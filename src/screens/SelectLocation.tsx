@@ -34,7 +34,7 @@ export const SelectLocation = () => {
       contentContainerStyle={styles.container}
       data={list}
       renderItem={({ item })=> (
-          <TouchableOpacity style={styles.item} onPress={() => navigate("LocationDetails")}>
+          <TouchableOpacity style={styles.item} onPress={() => navigate("LocationDetails", {location: item.value})}>
             <Text style={styles.itemText}>{item.title}</Text>
          </TouchableOpacity>
       )}

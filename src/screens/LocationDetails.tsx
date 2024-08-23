@@ -5,18 +5,22 @@ import { FollowingDays } from '../components/FollowingDays';
 import { Footer } from '../components/Footer';
 import { fetchCityData, fetchFollowingDays } from '../services/apis'; 
 import { CityData, FollowingDay } from "../types/api";
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/Root';
 
 export const LocationDetails = () => {
   const [current, setCurrent] = useState<null | CityData>(null);
   const [followingDays, setFollowingDays] = useState<null | FollowingDay>(null); 
 
+  const {params: {location}} = useRoute<RouteProp<RootStackParamList, "LocationDetails">>();
+
   useEffect(() => {
     const init = async () => {
       try {
-        const currentData = await fetchCityData();
+        const currentData = await fetchCityData(location);
         setCurrent(currentData);
         
-        const followingDaysData = await fetchFollowingDays();
+        const followingDaysData = await fetchFollowingDays(location);
         setFollowingDays(followingDaysData);
       } catch (error) {
         console.error("Błąd podczas pobierania danych:", error);
