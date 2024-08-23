@@ -4,12 +4,12 @@ import { COLORS } from '../themes/colors';
 import { FollowingDays } from '../components/FollowingDays';
 import { Footer } from '../components/Footer';
 import { fetchCityData, fetchFollowingDays } from '../services/apis'; 
-import { CityData, FollowingDay } from "../types/api";
+import { ApiError, CityData, FollowingDay } from "../types/api";
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/Root';
 
 export const LocationDetails = () => {
-  const [current, setCurrent] = useState<null | CityData>(null);
+  const [current, setCurrent] = useState<null | CityData | ApiError>(null);
   const [followingDays, setFollowingDays] = useState<null | FollowingDay>(null); 
 
   const {params: {location}} = useRoute<RouteProp<RootStackParamList, "LocationDetails">>();
@@ -29,7 +29,7 @@ export const LocationDetails = () => {
     init();
   }, []);
 
-  if (!current || !followingDays) {
+  if (!current || !followingDays || "error" in current  || "error" in followingDays ) {
     return <ActivityIndicator color={COLORS.sun} size="large" style={{ height: "100%" }} />
   }
 
