@@ -144,3 +144,7 @@ export interface FollowingDay {
   current: Current;
   forecast: Forecast;
 }
+
+export interface ApiError {
+  error: { code: number; message: string };
+}

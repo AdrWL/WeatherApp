@@ -8,7 +8,9 @@ import { COLORS } from "../themes/colors";
 
 export type RootStackParamList = {
     SelectLocation: undefined;
-    LocationDetails: undefined;
+    LocationDetails: {
+      location: string
+    };
     DayDetails: {
         day: ForecastDay;
         locationName: string;

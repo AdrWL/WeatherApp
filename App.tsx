@@ -7,6 +7,7 @@ import {
   DefaultTheme,
   Theme,
 } from "@react-navigation/native";
+import 'react-native-get-random-values';
 
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
