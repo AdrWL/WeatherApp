@@ -13,6 +13,7 @@ import { COLORS } from "../themes/colors";
 import { SearchInput } from "../components/SearchInput";
 import { useLocationList } from "../hooks/useLocationList";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { SelectLocationByCoordinates } from "../components/SelectLocationByCoordinates";
 
 export const SelectLocation = () => {
   const { navigate } =
@@ -22,9 +23,10 @@ export const SelectLocation = () => {
   return (
     <FlatList
       ListHeaderComponent={
-        <SearchInput
-          onSearch={(value) => addToList({ title: value, value: value })}
-        />
+          <SearchInput
+            onSearch={(value) => addToList({ title: value, value: value })}
+            rightElement={<SelectLocationByCoordinates/>}
+          />
       }
       ListHeaderComponentStyle={styles.header}
       contentContainerStyle={styles.container}
