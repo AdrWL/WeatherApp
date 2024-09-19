@@ -5,10 +5,18 @@ import {
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLORS } from "../themes/colors";
+import * as Location from 'expo-location';
 
 export const SelectLocationByCoordinates = () => {
+
+  const onButtonPress= async () =>{
+
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log(status);
+  }
+
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} onPress={onButtonPress}>
       <Ionicons name="location-outline" size={24} color="black" />
     </TouchableOpacity>
   );

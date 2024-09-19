@@ -22,6 +22,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [["expo-location", {
+      "locationAlwaysAndWhenInUsePermission": "Pozwól $(PRODUCT_NAME) na dostęp do lokalizacji w celu określenia pogody dla regionuw którym się znajdujesz"
+    }]]
   }
 }
