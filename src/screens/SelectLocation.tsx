@@ -25,7 +25,7 @@ export const SelectLocation = () => {
       ListHeaderComponent={
           <SearchInput
             onSearch={(value) => addToList({ title: value, value: value })}
-            rightElement={<SelectLocationByCoordinates/>}
+            rightElement={<SelectLocationByCoordinates onLocationFound={(item) => addToList(item)}/>}
           />
       }
       ListHeaderComponentStyle={styles.header}
