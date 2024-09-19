@@ -1,4 +1,5 @@
 import {
+    Alert,
     TouchableOpacity,
     StyleSheet,
   } from "react-native";
@@ -12,6 +13,14 @@ export const SelectLocationByCoordinates = () => {
   const onButtonPress= async () =>{
 
     const { status } = await Location.requestForegroundPermissionsAsync();
+
+    if(status === Location.PermissionStatus.DENIED) {
+      Alert.alert("Brak uprawnień", "Aby móc korzystać z funkcjonalności przejdz do ustawień i pozwól na pobranie lokalizacji.")
+    } if (status === Location.PermissionStatus.GRANTED) {
+      const location = await Location.getCurrentPositionAsync();
+      console.log(location)
+    }
+
     console.log(status);
   }
 
