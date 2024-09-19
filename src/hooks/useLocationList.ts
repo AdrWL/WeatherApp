@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 uuidv4();
 
-interface ListItem {
+export interface ListItem {
     id: string;
     title: string;
     value: string;

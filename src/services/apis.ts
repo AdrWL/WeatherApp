@@ -1,6 +1,6 @@
-import { CityData, FollowingDay } from "../types/api";
+import { ApiError, CityData, FollowingDay } from "../types/api";
 
-export const fetchCityData = async (location: string): Promise<CityData> => {
+export const fetchCityData = async (location: string): Promise<CityData | ApiError> => {
   const response = await fetch(
     `${process.env.EXPO_PUBLIC_API_URL}/current.json?key=${process.env.EXPO_PUBLIC_API_KEY}&q=${location}&lang=pl`
   )
