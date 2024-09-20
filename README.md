@@ -3,12 +3,12 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6ddb526a-ab6b-4fd0-aba7-eec8d0419f6d" />
-  <img src="https://github.com/user-attachments/assets/76f6db4f-29f2-491d-a37b-52a90e15b76d" />
+  <img src="https://github.com/user-attachments/assets/6ddb526a-ab6b-4fd0-aba7-eec8d0419f6d" style="max-width: 100%; height: auto;" />
+  <img src="https://github.com/user-attachments/assets/76f6db4f-29f2-491d-a37b-52a90e15b76d" style="max-width: 100%; height: auto;" />
 </p>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/50350b36-71dc-4f02-bf7e-a51ab6db763c" />
-  <img src="https://github.com/user-attachments/assets/e7aba377-e154-4919-8b39-6caa49af134e" />
+  <img src="https://github.com/user-attachments/assets/50350b36-71dc-4f02-bf7e-a51ab6db763c" style="max-width: 100%; height: auto;" />
+  <img src="https://github.com/user-attachments/assets/e7aba377-e154-4919-8b39-6caa49af134e" style="max-width: 100%; height: auto;" />
 </p>
 
 Aplikacjia do wyświetlania aktualnej pogody po wpisaniu miejscowości lub po pobraniu lokalizacji użytkownika
